@@ -32,7 +32,7 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
             rec.insert(i,fk.pybool())
     elif col_type == 'alphanumeric':
         for i in range(number_of_records):
-            rec.insert(i,fk.password(length=40, special_chars=False)
+            rec.insert(i,fk.password(length=40, special_chars=False))
     elif col_type == 'datetime':
         for i in range(number_of_records):
             t = fk.time()
