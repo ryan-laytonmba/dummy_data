@@ -109,7 +109,7 @@ def create_data():
         ct.download_button('Download Data', df.to_csv(),file_name='dummy_data.csv')
 
 #page config
-st.set_page_config(page_title='Dummy Data Creator', layout='wide')
+st.set_page_config(page_title='Dummy Data Creator', layout='wide',page_icon='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLYWPfgwpyAuFhMoqNpLBOq_Ln_Gy5X_tUsA&usqp=CAU')
 
 #sidebar
 sd = st.sidebar
