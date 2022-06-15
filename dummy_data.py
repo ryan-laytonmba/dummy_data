@@ -108,9 +108,25 @@ def create_data():
         ct.dataframe(df)
         ct.download_button('Download Data', df.to_csv(),file_name='dummy_data.csv')
 
-
+#page config
 st.set_page_config(page_title='Dummy Data Creator', layout='wide')
 
+#sidebar
+sd = st.sidebar
+sd.header('Column Types')
+sd.markdown('---')
+sd.write('- id - main id for table, counts by row')
+sd.write('- int - random integers between 1 and row count')
+sd.write('- string - a random block of text at desired length')
+sd.write('- datetime - a random datetime in the last 2 years')
+sd.write('- name - random name')
+sd.write('- bool - assigns True and False randomly')
+sd.write('- phone number - fake phone numbers')
+sd.write('- address(full) - a full address Street City, State Zip')
+sd.write('- address(street) - street address only')
+sd.write('- alphanumeric - a random alphanumeric string')
+
+#main page
 st.title('Dummy Data Creator')
 st.markdown('---')
 if 'col_num' not in st.session_state:
@@ -122,5 +138,3 @@ col3.number_input(label='Number of Rows',key='number_of_rows', value=1000)
 st.markdown('###')
 ct = st.container()
 add_col()
-
-   
