@@ -127,7 +127,7 @@ sd.write('- address(street) - street address only')
 sd.write('- alphanumeric - a random alphanumeric string')
 
 #main page
-col1, col2 = st.columns([.5,5])
+col1, col2 = st.columns([.5,10])
 col1.image('https://cdn-icons-png.flaticon.com/512/149/149206.png')
 col2.title('Dummy Data Creator')
 st.markdown('---')
