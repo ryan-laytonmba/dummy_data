@@ -12,28 +12,28 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
         elif col_type.find('string') >= 0:
             x = int(col_type[len('string'):])
             for i in range(number_of_records):
-                rec.insert(i,"'" + fk.text(max_nb_chars = x) + "'")
+                rec.insert(i,"'" + fk.text(max_nb_chars = x).replace("'","''") + "'")
         elif col_type == 'id':
             for i in range(number_of_records):
                 rec.insert(i,i+1)
         elif col_type == 'phone number':
             for i in range(number_of_records):
-                rec.insert(i,"'" + fk.phone_number() + "'")
+                rec.insert(i,"'" + fk.phone_number().replace("'","''") + "'")
         elif col_type == 'address(full)':
             for i in range(number_of_records):
-                rec.insert(i,"'" + fk.address() + "'")
+                rec.insert(i,"'" + fk.address().replace("'","''") + "'")
         elif col_type == 'address(street)':
             for i in range(number_of_records):
-                rec.insert(i,"'" + fk.street_address() + "'")
+                rec.insert(i,"'" + fk.street_address().replace("'","''") + "'")
         elif col_type == 'name':
             for i in range(number_of_records):
-                rec.insert(i,"'" + fk.name() + "'")
+                rec.insert(i,"'" + fk.name().replace("'","''") + "'")
         elif col_type == 'bool':
             for i in range(number_of_records):
                 rec.insert(i,fk.pybool())
         elif col_type == 'alphanumeric':
             for i in range(number_of_records):
-                rec.insert(i,"'" + fk.password(length=40, special_chars=False) + "'")
+                rec.insert(i,"'" + fk.password(length=40, special_chars=False).replace("'","''") + "'")
         elif col_type == 'datetime':
             for i in range(number_of_records):
                 t = fk.time()
