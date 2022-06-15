@@ -163,7 +163,7 @@ st.set_page_config(page_title='Dummy Data Creator', layout='wide',page_icon='htt
 sd = st.sidebar
 sd.header('Column Types')
 sd.markdown('---')
-sd.write('- <b>id</b> - main id for table, counts by row')
+sd.markdown('- <b>id</b> - main id for table, counts by row')
 sd.write('- int - random integers between 1 and row count')
 sd.write('- string - a random block of text at desired length')
 sd.write('- datetime - a random datetime in the last 2 years')
