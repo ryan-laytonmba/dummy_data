@@ -127,7 +127,9 @@ sd.write('- address(street) - street address only')
 sd.write('- alphanumeric - a random alphanumeric string')
 
 #main page
-st.title('Dummy Data Creator')
+col1, col2 = st.columns([1,5])
+col1.image('https://cdn-icons-png.flaticon.com/512/149/149206.png')
+col2.title('Dummy Data Creator')
 st.markdown('---')
 if 'col_num' not in st.session_state:
     st.session_state.col_num = 1
