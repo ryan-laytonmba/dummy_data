@@ -30,6 +30,9 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
     elif col_type == 'bool':
         for i in range(number_of_records):
             rec.insert(i,fk.pybool())
+    elif col_type == 'alphanumeric':
+        for i in range(number_of_records):
+            rec.insert(i,fk.password(length=40, special_chars=False)
     elif col_type == 'datetime':
         for i in range(number_of_records):
             t = fk.time()
@@ -71,7 +74,7 @@ def add_col():
 
 fk =  Faker(['en_US'])
 fill_data  = {}
-opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)']
+opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric']
 def create_data():
     if st.session_state.col_num == 1 and st.session_state['ti_1'] == '':
         st.error('No Columns Entered')
