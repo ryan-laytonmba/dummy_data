@@ -175,7 +175,7 @@ sd.markdown('- **address(street):** street address only')
 sd.markdown('- **alphanumeric:** a random alphanumeric string')
 
 #main page
-col1, col2 = st.columns([.1,5])
+col1, col2 = st.columns([.25,5])
 col1.image('https://cdn-icons-png.flaticon.com/512/149/149206.png',)
 col2.title('Dummy Data Creator')
 st.markdown('---')
