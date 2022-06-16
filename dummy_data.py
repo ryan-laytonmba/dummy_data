@@ -100,7 +100,7 @@ def add_col():
         ct.markdown('###')
         col1, col2, col3 = ct.columns(3)
         col1.text_input(label='column name',placeholder='Enter Column Name', key='ti_' + str(1))
-        col2.selectbox(label='column type', options=opt, key='sb_' + str(1), on_change=string_switch, args=('sb_' + str(1),1))
+        col2.selectbox(label='column type', options=opt, key='sb_' + str(1), on_change=string_switch, args=('sb_' + str(1),1),index=opt.index('id'))
         col3.text_input(label='string length',placeholder='If type string, specify length here', key='sl_' + str(1), disabled=st.session_state['sl_' + str(st.session_state.col_num) + '_dis'])
     else:
         for i in range(0,st.session_state.col_num):
@@ -109,13 +109,14 @@ def add_col():
             ct.markdown('###')
             col1, col2, col3 = ct.columns(3)
             col1.text_input(label='column name',placeholder='Enter Column Name', key='ti_' + str(i+1))
-            col2.selectbox(label='column type', options=opt, key='sb_' + str(i+1), on_change=string_switch, args=('sb_' + str(i + 1), i + 1))
+            col2.selectbox(label='column type', options=opt, key='sb_' + str(i+1), on_change=string_switch, args=('sb_' + str(i + 1), i + 1),index=opt.index('id'))
             col3.text_input(label='string length',placeholder='If type string, specify length here', key='sl_' + str(i+1), disabled=st.session_state['sl_' + str(i + 1) + '_dis'])
     
 
 fk =  Faker(['en_US'])
 fill_data  = {}
 opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric', 'email']
+opt.sort()
 def create_data():
     if st.session_state.col_num == 1 and st.session_state['ti_1'] == '':
         st.error('No Columns Entered')
@@ -175,17 +176,17 @@ if 'TableName' not in st.session_state:
 sd = st.sidebar
 sd.header('Column Types')
 sd.markdown('---')
-sd.markdown('- **id:** main id for table, counts by row')
-sd.markdown('- **int:** random integers between 1 and row count')
-sd.markdown('- **string:** a random block of text at desired length')
-sd.markdown('- **datetime:** a random datetime in the last 2 years')
-sd.markdown('- **name:** random name')
-sd.markdown('- **bool:** assigns True and False randomly')
-sd.markdown('- **phone number:** fake phone numbers')
 sd.markdown('- **address(full):** a full address Street City, State Zip')
 sd.markdown('- **address(street):** street address only')
 sd.markdown('- **alphanumeric:** a random alphanumeric string')
+sd.markdown('- **bool:** assigns True and False randomly')
+sd.markdown('- **datetime:** a random datetime in the last 2 years')
 sd.markdown('- **email:** a random free email address')
+sd.markdown('- **id:** main id for table, counts by row')
+sd.markdown('- **int:** random integers between 1 and row count')
+sd.markdown('- **name:** random name')
+sd.markdown('- **phone number:** fake phone numbers')
+sd.markdown('- **string:** a random block of text at desired length')
 
 #main page
 col1, col2 = st.columns([.2,5])
