@@ -39,6 +39,9 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
                 t = fk.time()
                 d = str(fk.date_between(start_date='-2y'))
                 rec.insert(i,"'" + d + ' ' + t + "'")
+        elif col_type == 'email':
+            for i in range(number_of_records):
+                rec.insert(i,"'" + fk.ascii_free_email() + "'")
     else:
         if col_type == 'int':
             for i in range(number_of_records):
@@ -73,6 +76,9 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
                 t = fk.time()
                 d = str(fk.date_between(start_date='-2y'))
                 rec.insert(i,d + ' ' + t)
+        elif col_type == 'email':
+            for i in range(number_of_records):
+                rec.insert(i,fk.ascii_free_email())
     
     fill_data.update({col_name : rec})
 
@@ -109,7 +115,7 @@ def add_col():
 
 fk =  Faker(['en_US'])
 fill_data  = {}
-opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric']
+opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric', 'email']
 def create_data():
     if st.session_state.col_num == 1 and st.session_state['ti_1'] == '':
         st.error('No Columns Entered')
@@ -179,6 +185,7 @@ sd.markdown('- **phone number:** fake phone numbers')
 sd.markdown('- **address(full):** a full address Street City, State Zip')
 sd.markdown('- **address(street):** street address only')
 sd.markdown('- **alphanumeric:** a random alphanumeric string')
+sd.markdown('- **email:** a random free email address')
 
 #main page
 col1, col2 = st.columns([.2,5])
