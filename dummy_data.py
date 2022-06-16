@@ -205,3 +205,14 @@ if st.session_state.SQL_col == True:
 st.markdown('###')
 ct = st.container()
 add_col()
+
+# ---- HIDE STREAMLIT STYLE ----
+hide_st_style = """
+            <style>
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+
+
+st.markdown(hide_st_style, unsafe_allow_html=True)
