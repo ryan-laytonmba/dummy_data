@@ -198,9 +198,11 @@ if 'col_num' not in st.session_state:
 col1, col2, col3= st.columns([1,1,1])
 col1.button('Add Column', on_click=col_count)
 col2.button('Create DF', on_click = create_data)
+col2.markdown('###')
 col2.number_input(label='Number of Rows',key='number_of_rows', value=1000)
 col3.checkbox("Add SQL Insert Statement", value=True, key='SQL_col')
 if st.session_state.SQL_col == True:
+    col3.markdown('##')
     col3.text_input('Table Name',key='TableName',)
 st.markdown('###')
 ct = st.container()
