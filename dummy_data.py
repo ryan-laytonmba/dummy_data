@@ -147,7 +147,10 @@ def create_data():
 
             col = col[0:len(col)-2] + ')'
 
-            ins_st = 'insert into [TABLENAME] ' + col + ' values '
+            if st.session_state.TableName == '':
+                ins_st = 'insert into [TABLENAME] ' + col + ' values '
+            else:
+                ins_st = 'insert into ' + st.session_state.TableName + ' ' + col + ' values '
 
             df['SQL'] = ins_st + '(' + df.astype(str).apply(','.join, axis=1) + ')'
 
@@ -159,33 +162,38 @@ def create_data():
 #page config
 st.set_page_config(page_title='Dummy Data Creator', layout='wide',page_icon='https://cdn-icons-png.flaticon.com/512/149/149206.png')
 
+if 'TableName' not in st.session_state:
+    st.session_state['TableName'] = ''
+
 #sidebar
 sd = st.sidebar
 sd.header('Column Types')
 sd.markdown('---')
-sd.markdown('- **id:** main id for table, counts by row')
-sd.markdown('- **int:** random integers between 1 and row count')
-sd.markdown('- **string:** a random block of text at desired length')
-sd.markdown('- **datetime:** a random datetime in the last 2 years')
-sd.markdown('- **name:** random name')
-sd.markdown('- **bool:** assigns True and False randomly')
-sd.markdown('- **phone number:** fake phone numbers')
-sd.markdown('- **address(full):** a full address Street City, State Zip')
-sd.markdown('- **address(street):** street address only')
-sd.markdown('- **alphanumeric:** a random alphanumeric string')
+sd.write('- id - main id for table, counts by row')
+sd.write('- int - random integers between 1 and row count')
+sd.write('- string - a random block of text at desired length')
+sd.write('- datetime - a random datetime in the last 2 years')
+sd.write('- name - random name')
+sd.write('- bool - assigns True and False randomly')
+sd.write('- phone number - fake phone numbers')
+sd.write('- address(full) - a full address Street City, State Zip')
+sd.write('- address(street) - street address only')
+sd.write('- alphanumeric - a random alphanumeric string')
 
 #main page
-col1, col2 = st.columns([.25,5])
+col1, col2 = st.columns([.2,5])
 col1.image('https://cdn-icons-png.flaticon.com/512/149/149206.png',)
 col2.title('Dummy Data Creator')
 st.markdown('---')
 if 'col_num' not in st.session_state:
     st.session_state.col_num = 1
-col1, col2, col3, col4= st.columns([1,1,.5,.5])
+col1, col2, col3= st.columns([1,1,1])
 col1.button('Add Column', on_click=col_count)
-col3.button('Create DF', on_click = create_data)
-col3.number_input(label='Number of Rows',key='number_of_rows', value=1000)
-col4.checkbox("Add SQL Insert Statement", value=True, key='SQL_col')
+col2.button('Create DF', on_click = create_data)
+col2.number_input(label='Number of Rows',key='number_of_rows', value=1000)
+col3.checkbox("Add SQL Insert Statement", value=True, key='SQL_col')
+if st.session_state.SQL_col == True:
+    col3.text_input('Table Name',key='TableName',)
 st.markdown('###')
 ct = st.container()
 add_col()
