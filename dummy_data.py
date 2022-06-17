@@ -42,6 +42,9 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
         elif col_type == 'email':
             for i in range(number_of_records):
                 rec.insert(i,"'" + fk.ascii_free_email() + "'")
+        elif col_type == 'email':
+            for i in range(number_of_records):
+                rec.insert(i,"'" + fk.uuid4() + "'")
     else:
         if col_type == 'int':
             for i in range(number_of_records):
@@ -79,6 +82,9 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
         elif col_type == 'email':
             for i in range(number_of_records):
                 rec.insert(i,fk.ascii_free_email())
+        elif col_type == 'uuid':
+            for i in range(number_of_records):
+                rec.insert(i,fk.uuid4())
     
     fill_data.update({col_name : rec})
 
@@ -115,7 +121,7 @@ def add_col():
 
 fk =  Faker(['en_US'])
 fill_data  = {}
-opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric', 'email']
+opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric', 'email', 'uuid']
 opt.sort()
 def create_data():
     if st.session_state.col_num == 1 and st.session_state['ti_1'] == '':
@@ -187,6 +193,7 @@ sd.markdown('- **int:** random integers between 1 and row count')
 sd.markdown('- **name:** random name')
 sd.markdown('- **phone number:** fake phone numbers')
 sd.markdown('- **string:** a random block of text at desired length')
+sd.markdown('- **uuid:** a random uuid (universally unique identifier)')
 
 #main page
 col1, col2 = st.columns([.2,5])
