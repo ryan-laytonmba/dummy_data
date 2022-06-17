@@ -42,7 +42,7 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
         elif col_type == 'email':
             for i in range(number_of_records):
                 rec.insert(i,"'" + fk.ascii_free_email() + "'")
-        elif col_type == 'uuid4':
+        elif col_type == 'uuid':
             for i in range(number_of_records):
                 rec.insert(i,"'" + fk.uuid4() + "'")
     else:
