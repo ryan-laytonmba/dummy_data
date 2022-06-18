@@ -1,3 +1,4 @@
+from datetime import datetime
 import pandas as pd
 from faker import Faker
 import streamlit as st
@@ -5,86 +6,53 @@ import streamlit as st
 def dummy_data(col_name, col_type, number_of_records = 1000):
     rec = []
     
+    if col_type == 'int':
+        for i in range(number_of_records):
+            rec.insert(i,fk.random_int(1,st.session_state.number_of_rows))
+    elif col_type.find('string') >= 0:
+        x = int(col_type[len('string'):])
+        for i in range(number_of_records):
+            rec.insert(i,fk.text(max_nb_chars = x))
+    elif col_type == 'id':
+        for i in range(number_of_records):
+            rec.insert(i,i+1)
+    elif col_type == 'phone number':
+        for i in range(number_of_records):
+            rec.insert(i,fk.phone_number())
+    elif col_type == 'address(full)':
+        for i in range(number_of_records):
+            rec.insert(i,fk.address())
+    elif col_type == 'address(street)':
+        for i in range(number_of_records):
+            rec.insert(i,fk.street_address())
+    elif col_type == 'name':
+        for i in range(number_of_records):
+            rec.insert(i,fk.name())
+    elif col_type == 'bool':
+        for i in range(number_of_records):
+            rec.insert(i,fk.pybool())
+    elif col_type == 'alphanumeric':
+        for i in range(number_of_records):
+            rec.insert(i,fk.password(length=40, special_chars=False))
+    elif col_type == 'datetime':
+        for i in range(number_of_records):
+            t = fk.time()
+            d = str(fk.date_between(start_date='-2y'))
+            rec.insert(i,d + ' ' + t)
+    elif col_type == 'email':
+        for i in range(number_of_records):
+            rec.insert(i,fk.ascii_free_email())
+    elif col_type == 'uuid':
+        for i in range(number_of_records):
+            rec.insert(i,fk.uuid4())
+
     if st.session_state.SQL_col == True:
-        if col_type == 'int':
-            for i in range(number_of_records):
-                rec.insert(i,fk.random_int(1,st.session_state.number_of_rows))
-        elif col_type.find('string') >= 0:
-            x = int(col_type[len('string'):])
-            for i in range(number_of_records):
-                rec.insert(i,"'" + fk.text(max_nb_chars = x).replace("'","''") + "'")
-        elif col_type == 'id':
-            for i in range(number_of_records):
-                rec.insert(i,i+1)
-        elif col_type == 'phone number':
-            for i in range(number_of_records):
-                rec.insert(i,"'" + fk.phone_number().replace("'","''") + "'")
-        elif col_type == 'address(full)':
-            for i in range(number_of_records):
-                rec.insert(i,"'" + fk.address().replace("'","''") + "'")
-        elif col_type == 'address(street)':
-            for i in range(number_of_records):
-                rec.insert(i,"'" + fk.street_address().replace("'","''") + "'")
-        elif col_type == 'name':
-            for i in range(number_of_records):
-                rec.insert(i,"'" + fk.name().replace("'","''") + "'")
-        elif col_type == 'bool':
-            for i in range(number_of_records):
-                rec.insert(i,fk.pybool())
-        elif col_type == 'alphanumeric':
-            for i in range(number_of_records):
-                rec.insert(i,"'" + fk.password(length=40, special_chars=False).replace("'","''") + "'")
-        elif col_type == 'datetime':
-            for i in range(number_of_records):
-                t = fk.time()
-                d = str(fk.date_between(start_date='-2y'))
-                rec.insert(i,"'" + d + ' ' + t + "'")
-        elif col_type == 'email':
-            for i in range(number_of_records):
-                rec.insert(i,"'" + fk.ascii_free_email() + "'")
-        elif col_type == 'uuid':
-            for i in range(number_of_records):
-                rec.insert(i,"'" + fk.uuid4() + "'")
-    else:
-        if col_type == 'int':
-            for i in range(number_of_records):
-                rec.insert(i,fk.random_int(1,st.session_state.number_of_rows))
-        elif col_type.find('string') >= 0:
-            x = int(col_type[len('string'):])
-            for i in range(number_of_records):
-                rec.insert(i,fk.text(max_nb_chars = x))
-        elif col_type == 'id':
-            for i in range(number_of_records):
-                rec.insert(i,i+1)
-        elif col_type == 'phone number':
-            for i in range(number_of_records):
-                rec.insert(i,fk.phone_number())
-        elif col_type == 'address(full)':
-            for i in range(number_of_records):
-                rec.insert(i,fk.address())
-        elif col_type == 'address(street)':
-            for i in range(number_of_records):
-                rec.insert(i,fk.street_address())
-        elif col_type == 'name':
-            for i in range(number_of_records):
-                rec.insert(i,fk.name())
-        elif col_type == 'bool':
-            for i in range(number_of_records):
-                rec.insert(i,fk.pybool())
-        elif col_type == 'alphanumeric':
-            for i in range(number_of_records):
-                rec.insert(i,fk.password(length=40, special_chars=False))
-        elif col_type == 'datetime':
-            for i in range(number_of_records):
-                t = fk.time()
-                d = str(fk.date_between(start_date='-2y'))
-                rec.insert(i,d + ' ' + t)
-        elif col_type == 'email':
-            for i in range(number_of_records):
-                rec.insert(i,fk.ascii_free_email())
-        elif col_type == 'uuid':
-            for i in range(number_of_records):
-                rec.insert(i,fk.uuid4())
+        for r in range(len(rec)):
+            # print(type(rec[r]))
+            if type(rec[r]) == str:
+                rec[r] = "'" + rec[r] + "'"
+            elif type(r) == datetime:
+                rec[r] = "'" + rec[r] + "'"
     
     fill_data.update({col_name : rec})
 
@@ -193,18 +161,18 @@ sd.markdown('- **int:** random integers between 1 and row count')
 sd.markdown('- **name:** random name')
 sd.markdown('- **phone number:** fake phone numbers')
 sd.markdown('- **string:** a random block of text at desired length')
-sd.markdown('- **uuid:** a random uuid (universally unique identifier)')
+sd.markdown('- **uuid:** a random uuid (universally unique id)')
 
 #main page
 col1, col2 = st.columns([.2,5])
-col1.image('https://cdn-icons-png.flaticon.com/512/149/149206.png',)
+col1.image('https://cdn-icons-png.flaticon.com/512/149/149206.png')
 col2.title('Dummy Data Creator')
 st.markdown('---')
 if 'col_num' not in st.session_state:
     st.session_state.col_num = 1
 col1, col2, col3= st.columns([1,1,1])
 col1.button('Add Column', on_click=col_count)
-col2.button('Create DF', on_click = create_data)
+col2.button('Create DF', on_click = create_data,)
 col2.markdown('###')
 col2.number_input(label='Number of Rows',key='number_of_rows', value=1000)
 col3.checkbox("Add SQL Insert Statement", value=True, key='SQL_col')
@@ -214,14 +182,3 @@ if st.session_state.SQL_col == True:
 st.markdown('###')
 ct = st.container()
 add_col()
-
-# ---- HIDE STREAMLIT STYLE ----
-hide_st_style = """
-            <style>
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-
-
-st.markdown(hide_st_style, unsafe_allow_html=True)
