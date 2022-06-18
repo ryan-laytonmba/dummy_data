@@ -3,6 +3,7 @@ import pandas as pd
 from faker import Faker
 import streamlit as st
 
+#function to determin which typy of dummy data to generate
 def dummy_data(col_name, col_type, number_of_records = 1000):
     rec = []
     
@@ -45,7 +46,8 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
     elif col_type == 'uuid':
         for i in range(number_of_records):
             rec.insert(i,fk.uuid4())
-
+    
+    # reformat dummy data to be able to create the sql insert statement 
     if st.session_state.SQL_col == True:
         for r in range(len(rec)):
             # print(type(rec[r]))
@@ -56,9 +58,11 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
     
     fill_data.update({col_name : rec})
 
+#function to add columns to the streamlit session state
 def col_count():
     st.session_state.col_num = st.session_state.col_num + 1
     # add_col()
+#function to enable and disable the string length column
 def string_switch(t, n):
     if st.session_state[t] == 'string':
         st.session_state['sl_' + str(n) + '_dis'] = False
@@ -66,6 +70,7 @@ def string_switch(t, n):
         st.session_state['sl_' + str(n)] = ''
         st.session_state['sl_' + str(n) + '_dis'] = True
 
+#function to add columns to the webpage based on the session state count
 def add_col():
     # print(st.session_state.col_num)
     if st.session_state.col_num == 1:
@@ -86,11 +91,7 @@ def add_col():
             col2.selectbox(label='column type', options=opt, key='sb_' + str(i+1), on_change=string_switch, args=('sb_' + str(i + 1), i + 1),index=opt.index('id'))
             col3.text_input(label='string length',placeholder='If type string, specify length here', key='sl_' + str(i+1), disabled=st.session_state['sl_' + str(i + 1) + '_dis'])
     
-
-fk =  Faker(['en_US'])
-fill_data  = {}
-opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric', 'email', 'uuid']
-opt.sort()
+#function to create the dummy data
 def create_data():
     if st.session_state.col_num == 1 and st.session_state['ti_1'] == '':
         st.error('No Columns Entered')
@@ -139,6 +140,15 @@ def create_data():
         ct.markdown('###')
         ct.dataframe(df)
         ct.download_button('Download Data', df.to_csv(),file_name='dummy_data.csv')
+
+
+#initialize faker
+fk =  Faker(['en_US'])
+fill_data  = {}
+
+#create options for column type list
+opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric', 'email', 'uuid']
+opt.sort()
 
 #page config
 st.set_page_config(page_title='Dummy Data Creator', layout='wide',page_icon='https://cdn-icons-png.flaticon.com/512/149/149206.png')
