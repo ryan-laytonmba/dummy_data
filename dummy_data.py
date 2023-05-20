@@ -46,6 +46,9 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
     elif col_type == 'uuid':
         for i in range(number_of_records):
             rec.insert(i,fk.uuid4())
+    elif col_type == 'money':
+        for i in range(number_of_records):
+            rec.insert(i,fk.pricetag(())
     
     # reformat dummy data to be able to create the sql insert statement 
     if st.session_state.SQL_col == True:
@@ -147,7 +150,7 @@ fk =  Faker(['en_US'])
 fill_data  = {}
 
 #create options for column type list
-opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric', 'email', 'uuid']
+opt = ['id','int','string','datetime','name','bool','phone number', 'address(full)', 'address(street)', 'alphanumeric', 'email', 'uuid', 'money']
 opt.sort()
 
 #page config
@@ -168,6 +171,7 @@ sd.markdown('- **datetime:** a random datetime in the last 2 years')
 sd.markdown('- **email:** a random free email address')
 sd.markdown('- **id:** main id for table, counts by row')
 sd.markdown('- **int:** random integers between 1 and row count')
+sd.markdown('- **money:** a random amount of money')
 sd.markdown('- **name:** random name')
 sd.markdown('- **phone number:** fake phone numbers')
 sd.markdown('- **string:** a random block of text at desired length')
