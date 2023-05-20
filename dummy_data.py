@@ -48,7 +48,7 @@ def dummy_data(col_name, col_type, number_of_records = 1000):
             rec.insert(i,fk.uuid4())
     elif col_type == 'money':
         for i in range(number_of_records):
-            rec.insert(i,fk.pricetag(())
+            rec.insert(i,fk.pricetag())
     
     # reformat dummy data to be able to create the sql insert statement 
     if st.session_state.SQL_col == True:
